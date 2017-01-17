@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" language="groovy" pageWidth="1224" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="1184" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryWithPageHeaderAndFooter="true">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="149"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="Volume" class="java.lang.String"/>
+	<parameter name="Folio" class="java.lang.String"/>
+	<parameter name="localAuthority" class="java.lang.String"/>
+	<parameter name="village" class="java.lang.String"/>
+	<parameter name="west" class="java.lang.String"/>
+	<parameter name="north" class="java.lang.String"/>
+	<parameter name="south" class="java.lang.String"/>
+	<parameter name="east" class="java.lang.String"/>
+	<parameter name="acre" class="java.lang.String"/>
+	<parameter name="rood" class="java.lang.String"/>
+	<parameter name="perch" class="java.lang.String"/>
+	<parameter name="name" class="java.lang.String"/>
+	<field name="Day Book No" class="java.lang.String"/>
+	<field name="Nature" class="java.lang.String"/>
+	<field name="Notry" class="java.lang.String"/>
+	<field name="Deed No" class="java.lang.String"/>
+	<field name="Value" class="java.lang.String"/>
+	<field name="Grantor" class="java.lang.String"/>
+	<field name="Grantee" class="java.lang.String"/>
+	<field name="Note" class="java.lang.String"/>
+	<field name="Reg. Duty" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="64" splitType="Stretch">
+			<textField pattern="h.mm a">
+				<reportElement x="1092" y="13" width="72" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy/MM/dd">
+				<reportElement x="1025" y="13" width="67" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="987" y="13" width="38" height="20"/>
+				<textElement/>
+				<text><![CDATA[Date :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="352" y="0" width="443" height="30"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true" isItalic="false" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Land Registry Department - Kotapola]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="442" y="33" width="261" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Extract]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="138" splitType="Stretch">
+			<staticText>
+				<reportElement x="56" y="0" width="57" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Volume :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="222" y="0" width="50" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Folio :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="115" y="0" width="95" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{Volume}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="272" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{Folio}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="699" y="0" width="55" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Name :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="762" y="0" width="126" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="76" y="30" width="61" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Extent :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="147" y="30" width="55" height="20"/>
+				<textElement>
+					<font size="12" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Acre -]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="202" y="30" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{acre}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="333" y="30" width="55" height="20"/>
+				<textElement>
+					<font size="12" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Rood -]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="519" y="30" width="55" height="20"/>
+				<textElement>
+					<font size="12" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Perch -]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="388" y="30" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{rood}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="574" y="30" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{perch}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="56" y="63" width="81" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Boundary :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="171" y="63" width="65" height="20"/>
+				<textElement>
+					<font size="12" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[North -]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="619" y="63" width="65" height="20"/>
+				<textElement>
+					<font size="12" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[East -]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="171" y="97" width="65" height="20"/>
+				<textElement>
+					<font size="12" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[West -]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="619" y="97" width="65" height="20"/>
+				<textElement>
+					<font size="12" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[South -]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="236" y="63" width="328" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{north}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="684" y="63" width="380" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{east}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="238" y="97" width="326" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{west}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="684" y="97" width="380" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{south}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="86" height="20"/>
+				<textElement>
+					<font size="12" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Day Book No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="86" y="0" width="104" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Nature]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="210" y="0" width="158" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true" isItalic="true" isUnderline="false" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[Notry]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="368" y="0" width="90" height="20"/>
+				<textElement>
+					<font size="12" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Deed No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="458" y="0" width="122" height="20"/>
+				<textElement>
+					<font size="12" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Value]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="580" y="0" width="161" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Grantor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="741" y="0" width="147" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Grantee]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="888" y="0" width="207" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Note]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1110" y="0" width="69" height="20"/>
+				<textElement>
+					<font size="12" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Reg. Duty]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="76" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Day Book No}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="76" y="0" width="95" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{Nature}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="171" y="0" width="181" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{Notry}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="442" y="0" width="122" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{Value}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="580" y="0" width="161" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{Grantor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="741" y="0" width="147" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{Grantee}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="888" y="0" width="222" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{Note}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1122" y="0" width="57" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Reg. Duty}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="358" y="2" width="84" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Deed No}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<line>
+				<reportElement x="990" y="13" width="130" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="1025" y="14" width="100" height="20"/>
+				<textElement>
+					<font size="11" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Land Registar]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField evaluationTime="Report">
+				<reportElement x="605" y="15" width="40" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="522" y="15" width="80" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

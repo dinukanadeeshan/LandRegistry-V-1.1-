@@ -1,0 +1,523 @@
+-- MySQL dump 10.10
+--
+-- Host: localhost    Database: LandRegistry
+-- ------------------------------------------------------
+-- Server version	5.0.17-nt
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Current Database: `LandRegistry`
+--
+
+/*!40000 DROP DATABASE IF EXISTS `LandRegistry`*/;
+
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `landregistry` /*!40100 DEFAULT CHARACTER SET latin1 */;
+
+USE `LandRegistry`;
+
+--
+-- Table structure for table `booktype`
+--
+
+DROP TABLE IF EXISTS `booktype`;
+CREATE TABLE `booktype` (
+  `typeCode` varchar(15) NOT NULL,
+  `name` varchar(20) NOT NULL,
+  PRIMARY KEY  (`typeCode`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `booktype`
+--
+
+
+/*!40000 ALTER TABLE `booktype` DISABLE KEYS */;
+LOCK TABLES `booktype` WRITE;
+INSERT INTO `booktype` VALUES ('G','General'),('L','LDO');
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `booktype` ENABLE KEYS */;
+
+--
+-- Table structure for table `boundry`
+--
+
+DROP TABLE IF EXISTS `boundry`;
+CREATE TABLE `boundry` (
+  `boundryId` varchar(30) NOT NULL,
+  `south` varchar(100) NOT NULL,
+  `north` varchar(100) NOT NULL,
+  `west` varchar(100) NOT NULL,
+  `east` varchar(100) NOT NULL,
+  PRIMARY KEY  (`boundryId`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `boundry`
+--
+
+
+/*!40000 ALTER TABLE `boundry` DISABLE KEYS */;
+LOCK TABLES `boundry` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `boundry` ENABLE KEYS */;
+
+--
+-- Table structure for table `client`
+--
+
+DROP TABLE IF EXISTS `client`;
+CREATE TABLE `client` (
+  `clientCode` varchar(10) NOT NULL,
+  `name` varchar(30) NOT NULL,
+  `address` varchar(70) NOT NULL,
+  PRIMARY KEY  (`clientCode`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `client`
+--
+
+
+/*!40000 ALTER TABLE `client` DISABLE KEYS */;
+LOCK TABLES `client` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `client` ENABLE KEYS */;
+
+--
+-- Table structure for table `daybookrecord`
+--
+
+DROP TABLE IF EXISTS `daybookrecord`;
+CREATE TABLE `daybookrecord` (
+  `dayBookNo` varchar(20) NOT NULL,
+  `recDate` date NOT NULL,
+  `recTime` time NOT NULL,
+  `clientCode` varchar(10) NOT NULL,
+  `redistrationDuty` double default NULL,
+  PRIMARY KEY  (`dayBookNo`),
+  KEY `clientCode` (`clientCode`),
+  CONSTRAINT `daybookrecord_ibfk_1` FOREIGN KEY (`clientCode`) REFERENCES `client` (`clientCode`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `daybookrecord`
+--
+
+
+/*!40000 ALTER TABLE `daybookrecord` DISABLE KEYS */;
+LOCK TABLES `daybookrecord` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `daybookrecord` ENABLE KEYS */;
+
+--
+-- Table structure for table `deed`
+--
+
+DROP TABLE IF EXISTS `deed`;
+CREATE TABLE `deed` (
+  `deedId` varchar(30) NOT NULL,
+  `dayBookNo` varchar(50) NOT NULL,
+  `refVolume` varchar(20) default NULL,
+  `refFolio` int(11) NOT NULL,
+  `notryCode` varchar(15) NOT NULL,
+  `bookType` varchar(15) NOT NULL,
+  `natureCode` varchar(20) NOT NULL,
+  `deedDate` date NOT NULL,
+  `notryNo` int(11) NOT NULL,
+  `mediumCode` varchar(15) NOT NULL,
+  `noOfLands` int(11) NOT NULL,
+  `deedValue` decimal(50,2) NOT NULL,
+  PRIMARY KEY  (`deedId`),
+  KEY `dayBookNo` (`dayBookNo`),
+  KEY `notryCode` (`notryCode`),
+  KEY `bookType` (`bookType`),
+  KEY `mediumCode` (`mediumCode`),
+  KEY `natureCode` (`natureCode`),
+  CONSTRAINT `deed_ibfk_1` FOREIGN KEY (`dayBookNo`) REFERENCES `daybookrecord` (`dayBookNo`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `deed_ibfk_2` FOREIGN KEY (`notryCode`) REFERENCES `notry` (`notryCode`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `deed_ibfk_3` FOREIGN KEY (`bookType`) REFERENCES `booktype` (`typeCode`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `deed_ibfk_4` FOREIGN KEY (`mediumCode`) REFERENCES `medium` (`mediumCode`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `deed_ibfk_5` FOREIGN KEY (`natureCode`) REFERENCES `natureofdeed` (`natureCode`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `deed`
+--
+
+
+/*!40000 ALTER TABLE `deed` DISABLE KEYS */;
+LOCK TABLES `deed` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `deed` ENABLE KEYS */;
+
+--
+-- Table structure for table `extent`
+--
+
+DROP TABLE IF EXISTS `extent`;
+CREATE TABLE `extent` (
+  `ExtId` varchar(30) NOT NULL,
+  `acre` int(11) NOT NULL,
+  `rood` int(11) NOT NULL,
+  `perch` int(11) NOT NULL,
+  PRIMARY KEY  (`ExtId`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `extent`
+--
+
+
+/*!40000 ALTER TABLE `extent` DISABLE KEYS */;
+LOCK TABLES `extent` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `extent` ENABLE KEYS */;
+
+--
+-- Table structure for table `grantee`
+--
+
+DROP TABLE IF EXISTS `grantee`;
+CREATE TABLE `grantee` (
+  `GeId` varchar(30) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `address` varchar(150) NOT NULL,
+  PRIMARY KEY  (`GeId`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `grantee`
+--
+
+
+/*!40000 ALTER TABLE `grantee` DISABLE KEYS */;
+LOCK TABLES `grantee` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `grantee` ENABLE KEYS */;
+
+--
+-- Table structure for table `grantor`
+--
+
+DROP TABLE IF EXISTS `grantor`;
+CREATE TABLE `grantor` (
+  `GrId` varchar(30) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `address` varchar(150) NOT NULL,
+  PRIMARY KEY  (`GrId`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `grantor`
+--
+
+
+/*!40000 ALTER TABLE `grantor` DISABLE KEYS */;
+LOCK TABLES `grantor` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `grantor` ENABLE KEYS */;
+
+--
+-- Table structure for table `land`
+--
+
+DROP TABLE IF EXISTS `land`;
+CREATE TABLE `land` (
+  `landCode` varchar(30) NOT NULL,
+  `volume` varchar(20) NOT NULL,
+  `folio` int(11) NOT NULL,
+  `name` varchar(30) NOT NULL,
+  `villageCode` varchar(20) NOT NULL,
+  `boundryId` varchar(30) NOT NULL,
+  `ExtId` varchar(30) NOT NULL,
+  `lotNo` varchar(20) default NULL,
+  `parentLand` varchar(30) default NULL,
+  PRIMARY KEY  (`landCode`),
+  KEY `villageCode` (`villageCode`),
+  KEY `boundryId` (`boundryId`),
+  KEY `parentLand` (`parentLand`),
+  KEY `ExtId` (`ExtId`),
+  CONSTRAINT `land_ibfk_1` FOREIGN KEY (`villageCode`) REFERENCES `villageortown` (`villageCode`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `land_ibfk_2` FOREIGN KEY (`boundryId`) REFERENCES `boundry` (`boundryId`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `land_ibfk_3` FOREIGN KEY (`parentLand`) REFERENCES `land` (`landCode`),
+  CONSTRAINT `land_ibfk_4` FOREIGN KEY (`ExtId`) REFERENCES `extent` (`ExtId`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `land`
+--
+
+
+/*!40000 ALTER TABLE `land` DISABLE KEYS */;
+LOCK TABLES `land` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `land` ENABLE KEYS */;
+
+--
+-- Table structure for table `localauthority`
+--
+
+DROP TABLE IF EXISTS `localauthority`;
+CREATE TABLE `localauthority` (
+  `authorityCode` varchar(20) NOT NULL,
+  `name` varchar(30) NOT NULL,
+  PRIMARY KEY  (`authorityCode`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `localauthority`
+--
+
+
+/*!40000 ALTER TABLE `localauthority` DISABLE KEYS */;
+LOCK TABLES `localauthority` WRITE;
+INSERT INTO `localauthority` VALUES ('LA001','Akuressa'),('LA002','Athuraliya');
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `localauthority` ENABLE KEYS */;
+
+--
+-- Table structure for table `medium`
+--
+
+DROP TABLE IF EXISTS `medium`;
+CREATE TABLE `medium` (
+  `mediumCode` varchar(15) NOT NULL,
+  `name` varchar(20) NOT NULL,
+  PRIMARY KEY  (`mediumCode`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `medium`
+--
+
+
+/*!40000 ALTER TABLE `medium` DISABLE KEYS */;
+LOCK TABLES `medium` WRITE;
+INSERT INTO `medium` VALUES ('E','English'),('S','Sinhala'),('T','Tamil');
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `medium` ENABLE KEYS */;
+
+--
+-- Table structure for table `mediumdetail`
+--
+
+DROP TABLE IF EXISTS `mediumdetail`;
+CREATE TABLE `mediumdetail` (
+  `notryCode` varchar(15) NOT NULL,
+  `mediumCode` varchar(15) NOT NULL,
+  PRIMARY KEY  (`notryCode`,`mediumCode`),
+  KEY `mediumCode` (`mediumCode`),
+  CONSTRAINT `mediumdetail_ibfk_1` FOREIGN KEY (`notryCode`) REFERENCES `notry` (`notryCode`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `mediumdetail_ibfk_2` FOREIGN KEY (`mediumCode`) REFERENCES `medium` (`mediumCode`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `mediumdetail`
+--
+
+
+/*!40000 ALTER TABLE `mediumdetail` DISABLE KEYS */;
+LOCK TABLES `mediumdetail` WRITE;
+INSERT INTO `mediumdetail` VALUES ('A0453','E'),('A0454','E'),('C0129','E'),('S0557','E'),('A0452','S'),('A0453','S'),('A0454','S'),('A0455','S'),('C0129','S'),('G0384','S'),('J0370','S'),('L0137','S'),('R0395','S'),('S0557','S');
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `mediumdetail` ENABLE KEYS */;
+
+--
+-- Table structure for table `natureofdeed`
+--
+
+DROP TABLE IF EXISTS `natureofdeed`;
+CREATE TABLE `natureofdeed` (
+  `natureCode` varchar(20) NOT NULL,
+  `name` varchar(30) NOT NULL,
+  `registrationDuty` decimal(4,2) default NULL,
+  PRIMARY KEY  (`natureCode`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `natureofdeed`
+--
+
+
+/*!40000 ALTER TABLE `natureofdeed` DISABLE KEYS */;
+LOCK TABLES `natureofdeed` WRITE;
+INSERT INTO `natureofdeed` VALUES ('N001','AGREEMENT','12.50'),('N002','AGREEMENT CANCELLATION','12.50'),('N003','ADDRESS','1.00'),('N004','GIFT','0.00'),('N005','LEASE','0.00'),('N006','LAND SETTLEMENT','0.00'),('N007','PISCAL','0.00'),('N008','TRANSFER','0.00'),('N009','MORTGAGE BOND','17.50'),('N010','MORTGAGE CANCELLATION','10.50'),('N011','DECLARATION','12.50');
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `natureofdeed` ENABLE KEYS */;
+
+--
+-- Table structure for table `notry`
+--
+
+DROP TABLE IF EXISTS `notry`;
+CREATE TABLE `notry` (
+  `notryCode` varchar(15) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `address` varchar(100) NOT NULL,
+  `notryOrJudge` varchar(10) default NULL,
+  `dateOfAppointment` date default NULL,
+  `gender` varchar(10) NOT NULL,
+  `officeCode` varchar(10) NOT NULL,
+  PRIMARY KEY  (`notryCode`),
+  KEY `officeCode` (`officeCode`),
+  CONSTRAINT `notry_ibfk_1` FOREIGN KEY (`officeCode`) REFERENCES `office` (`officeCode`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `notry`
+--
+
+
+/*!40000 ALTER TABLE `notry` DISABLE KEYS */;
+LOCK TABLES `notry` WRITE;
+INSERT INTO `notry` VALUES ('A0452','A P ABESEKARA','469, Mahawidiya, Beralapanathara','Judge','1994-06-24','Male','OFF001'),('A0453','DAMMIKA ABEWELA','Mahawidiya, Deniyaya','Judge','1989-10-29','Male','OFF024'),('A0454','DIMUTHU DARSHANA ABEWICRAMA','Pathakada, Deniyaya Rd, Morawaka','Judge','2000-04-17','Male','OFF024'),('A0455','ABEWICRAMA S R','A','Notry','2013-02-28','Male','OFF024'),('C0129','S C CHANDRADASA','Deniyaya Rd, Waralla','Judge','1990-12-02','Male','OFF024'),('G0384','REBET NIROSHAN GAMAGE','Beralapanathara','Judge','1999-05-25','Male','OFF024'),('J0370','KUSUMA JAGODA','Abayaraja, Valiwa, Morawaka','Judge','2000-12-02','Female','OFF024'),('L0137','LALITH G G M','A','Notry','2013-02-28','Male','OFF024'),('R0395','PRIYANTHA RAMACHANDRA','Pattila, Beralapanathara','Notry','2007-02-27','Male','OFF024'),('S0557','D A P SHAMALI','Waliwa, Morawaka','Notry','2004-12-31','Female','OFF024');
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `notry` ENABLE KEYS */;
+
+--
+-- Table structure for table `office`
+--
+
+DROP TABLE IF EXISTS `office`;
+CREATE TABLE `office` (
+  `officeCode` varchar(10) NOT NULL,
+  `name` varchar(20) NOT NULL,
+  PRIMARY KEY  (`officeCode`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `office`
+--
+
+
+/*!40000 ALTER TABLE `office` DISABLE KEYS */;
+LOCK TABLES `office` WRITE;
+INSERT INTO `office` VALUES ('OFF001','COLOMBO'),('OFF002','NUGEGODA'),('OFF003','HOMAGAMA'),('OFF004','ACISSAWELLA'),('OFF005','GAMPAHA'),('OFF006','NEGAMBO'),('OFF007','KANDY'),('OFF008','GAMPOLA'),('OFF009','MATALE'),('OFF010','NUWARAELIYA'),('OFF011','KURUNAGALA'),('OFF012','KULIYAPITIYA'),('OFF013','NIKAWERATIYA'),('OFF014','PUTTALAM'),('OFF015','CHILAW'),('OFF016','MARAWILA'),('OFF017','KALUTARA'),('OFF018','PANADURA'),('OFF019','HORANA'),('OFF020','MATHUGAMA'),('OFF021','GALLE'),('OFF022','BALAPITIYA'),('OFF023','MATARA'),('OFF024','KOTAPOLA'),('OFF025','TANGALLE'),('OFF026','HAMBANTOTA'),('OFF027','RATHNAPURA'),('OFF028','KEGALLE'),('OFF029','BADULLA'),('OFF030','MONARAGALA'),('OFF031','ANURADHAPURA'),('OFF032','MANNAR'),('OFF033','POLONNARUWA'),('OFF034','TRINCOMALEE'),('OFF035','BATTICALOA'),('OFF036','AMPARA'),('OFF037','KALMUNEI'),('OFF038','JAFFNA'),('OFF039','POINT PEDRO'),('OFF040','KILINOCHCHI'),('OFF041','VAVUNIA'),('OFF042','MULATIVU');
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `office` ENABLE KEYS */;
+
+--
+-- Table structure for table `registration`
+--
+
+DROP TABLE IF EXISTS `registration`;
+CREATE TABLE `registration` (
+  `deedId` varchar(30) NOT NULL,
+  `landCode` varchar(30) NOT NULL,
+  `registeredDate` date NOT NULL,
+  `GrId` varchar(30) NOT NULL,
+  `GeId` varchar(30) NOT NULL,
+  `note` varchar(3000) NOT NULL,
+  PRIMARY KEY  (`deedId`,`landCode`),
+  KEY `GrId` (`GrId`),
+  KEY `GeId` (`GeId`),
+  KEY `landCode` (`landCode`),
+  CONSTRAINT `registration_ibfk_1` FOREIGN KEY (`deedId`) REFERENCES `deed` (`deedId`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `registration_ibfk_2` FOREIGN KEY (`GrId`) REFERENCES `grantor` (`GrId`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `registration_ibfk_3` FOREIGN KEY (`GeId`) REFERENCES `grantee` (`GeId`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `registration_ibfk_4` FOREIGN KEY (`landCode`) REFERENCES `land` (`landCode`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `registration`
+--
+
+
+/*!40000 ALTER TABLE `registration` DISABLE KEYS */;
+LOCK TABLES `registration` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `registration` ENABLE KEYS */;
+
+--
+-- Table structure for table `returningdetail`
+--
+
+DROP TABLE IF EXISTS `returningdetail`;
+CREATE TABLE `returningdetail` (
+  `dayBookNo` varchar(50) NOT NULL,
+  `returnDate` date NOT NULL,
+  `remark` varchar(1000) default NULL,
+  `clientCode` varchar(10) NOT NULL,
+  PRIMARY KEY  (`dayBookNo`),
+  KEY `clientCode` (`clientCode`),
+  CONSTRAINT `returningdetail_ibfk_1` FOREIGN KEY (`clientCode`) REFERENCES `client` (`clientCode`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `returningdetail_ibfk_2` FOREIGN KEY (`dayBookNo`) REFERENCES `daybookrecord` (`dayBookNo`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `returningdetail`
+--
+
+
+/*!40000 ALTER TABLE `returningdetail` DISABLE KEYS */;
+LOCK TABLES `returningdetail` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `returningdetail` ENABLE KEYS */;
+
+--
+-- Table structure for table `user`
+--
+
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user` (
+  `userName` varchar(100) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `privilage` int(11) NOT NULL,
+  PRIMARY KEY  (`userName`,`password`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `user`
+--
+
+
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+LOCK TABLES `user` WRITE;
+INSERT INTO `user` VALUES ('dinuka','*699DF02E7497094970C174C550893EA05E270E94',0);
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+
+--
+-- Table structure for table `villageortown`
+--
+
+DROP TABLE IF EXISTS `villageortown`;
+CREATE TABLE `villageortown` (
+  `authorityCode` varchar(20) NOT NULL,
+  `villageCode` varchar(20) NOT NULL,
+  `name` varchar(30) NOT NULL,
+  PRIMARY KEY  (`villageCode`),
+  KEY `authorityCode` (`authorityCode`),
+  CONSTRAINT `villageortown_ibfk_1` FOREIGN KEY (`authorityCode`) REFERENCES `localauthority` (`authorityCode`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `villageortown`
+--
+
+
+/*!40000 ALTER TABLE `villageortown` DISABLE KEYS */;
+LOCK TABLES `villageortown` WRITE;
+INSERT INTO `villageortown` VALUES ('LA001','V001','Paraduwa'),('LA002','V002','Athuraliya'),('LA001','V003','Thibbatuwawa'),('LA001','V004','Imbulgoda'),('LA002','V005','Wilpita');
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `villageortown` ENABLE KEYS */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
